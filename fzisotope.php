@@ -255,74 +255,10 @@ function fzproject_function($type = 'fzproject_function')
     return $result;
 }
 
-// function used to print data on front-end page
-function fzisotope_function($type = 'fzisotope_function')
-{
-    $args = array(
-        'post_type' => 'fzisotope_post',
-        'posts_per_page' => 20
-    );
-    
-    $result = '<section id="options" class="clearfix">';
-    
-    $terms = get_terms("fzisotope_categories");
-    $count = count($terms);
-    
-    if ($count > 0) {
-        $result .= '<ul id="filters" class="option-set clearfix" data-option-key="filter">
-		  <li><a href="#filter" data-option-value="*" class="selected">show all</a></li>';
-        
-        foreach ($terms as $term) {
-            $result .= '<li><a href="#filter" data-option-value=".' . $term->slug . '">' . $term->name . '</a></li>';   
-        }
-        $result .= '</ul></section> <!-- #options -->';
-    }
-    
-    $result .= '<div id="containerk" class="containersmall clearfix">';
-    
-    //the loop  
-    $loop = new WP_Query($args);
-    while ($loop->have_posts()) {
-        $loop->the_post();
-	
-	// thumbnail url
-        $the_url = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
-        
-	$source = get_post_meta(get_the_ID(), 'source', true);
-	
-	// get title of current post
-        $title = get_post($post->ID)->post_title;
-
-        $terms = get_the_terms($post->ID, 'fzisotope_categories');
-        
-	// looping slug for class
-        $result .= '<a href="' . $source . '"><div class="element ';
-        foreach ($terms as $term) {
-            $result .= ' ' . $term->slug;
-        }
-        
-        $result .= '" data-symbol="Hg" data-category="';
-        
-	// looping slug for data category
-        foreach ($terms as $term) {
-            $result .= ' ' . $term->slug;
-        }
-        
-        
-        $result .= '" style="background-image:url(\'' . $the_url . '\')">
-
-      <p class="weight">' . $title . '</p>
-    </div></a>';
-    }
-    $result .= '</div> <!-- #container -->';
-    return $result;
-}
-
-
 //hook into the init action and call create_book_taxonomies when it fires
 add_action('init', 'create_isotope_taxonomies', 0);
 
-//create two taxonomies, genres and writers for the post type "book"
+//create taxonomy for fz isotope project
 function create_isotope_taxonomies()
 {
     // Add new taxonomy, NOT hierarchical (like tags)
