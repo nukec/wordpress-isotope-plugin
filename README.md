@@ -1,7 +1,7 @@
-isotope-wordpress-plugin
+wordpress-isotope-plugin
 ============================
 
-Isotope Wordpress Plugin
+Wordpress Isotope Plugin
 
 I really like the jQuery Isotope plugin, which helps you create rich and modern portfolio. I didn't find Isotope plugin at WordPress plugins website at the time, so I thought it would be a great idea to develop my own WordPress Isotope plugin. Development involved back-end custom post coding and front-end for proper rendering of isotope with variables from back-end.
 
